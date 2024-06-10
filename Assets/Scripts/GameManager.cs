@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator RoundStarting()
     {
         ResetAllTanks();
+        DisableTankControl();
 
         m_CameraControl.SetStartPositionAndSize();
 
@@ -81,6 +82,8 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator RoundPlaying()
     {
+        EnableTankControl();
+
         m_MessageText.text = string.Empty;
 
         while (!OneTankLeft())
@@ -91,6 +94,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator RoundEnding()
     {
+        DisableTankControl();
+
         m_RoundWinner = null;
 
         m_RoundWinner = GetRoundWinner();
@@ -166,6 +171,22 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < m_Tanks.Length; i++)
         {
             m_Tanks[i].Reset();
+        }
+    }
+    private void EnableTankControl()
+    {
+        for (int i = 0; i < m_Tanks.Length; i++)
+        {
+            m_Tanks[i].EnableControl();
+        }
+    }
+
+
+    private void DisableTankControl()
+    {
+        for (int i = 0; i < m_Tanks.Length; i++)
+        {
+            m_Tanks[i].DisableControl();
         }
     }
 }
